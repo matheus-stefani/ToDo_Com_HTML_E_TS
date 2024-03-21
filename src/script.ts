@@ -30,15 +30,9 @@ function criarObjeto(): HTMLDivElement{
     const botaoDeletar = document.createElement("button") as HTMLButtonElement;
     
 
-    const pegarUltimoFilho = pegarDivTextos.lastChild;
-    if(pegarUltimoFilho != null){
-        if(pegarUltimoFilho.firstChild != null){
-            criarId.textContent = String(Number(pegarUltimoFilho.firstChild.textContent)+1);
-        }
-        else{
-            criarId.textContent = "1";
-        }
-    }
+    
+    criarId.textContent = pegarId();
+       
  
 
     criarDiv = adicionarFilhos(criarDiv,criarId,criarPNome,criarPEmail,criarPIdade,botaoEditar,botaoDeletar);
@@ -53,6 +47,17 @@ function criarObjeto(): HTMLDivElement{
 
 }
 
+function pegarId():string {
+    const pegarUltimoFilho = pegarDivTextos.lastChild;
+    if(pegarUltimoFilho != null && pegarUltimoFilho.firstChild != null){
+
+        return String(Number(pegarUltimoFilho.firstChild.textContent)+1);
+
+    }
+
+    return  "1";
+}
+
 function adicionarFilhos(criarDiv: HTMLDivElement, criarId:HTMLParagraphElement,criarPNome:HTMLParagraphElement
     ,criarPEmail:HTMLParagraphElement,criarPIdade:HTMLParagraphElement,
     botaoEditar:HTMLButtonElement,botaoDeletar:HTMLButtonElement): HTMLDivElement {
@@ -62,8 +67,10 @@ function adicionarFilhos(criarDiv: HTMLDivElement, criarId:HTMLParagraphElement,
     criarPIdade.textContent = "Idade:"+pegarInputIdade.value; 
     botaoEditar.textContent = "Editar";
     botaoDeletar.textContent = "Deletar";
-
     
+
+    botaoDeletar.classList.add(pegarId()+"_botaoDeletar");
+    botaoEditar.classList.add(pegarId()+"_botaoEditar");
 
     criarDiv.appendChild(criarId);
     criarDiv.appendChild(criarPNome);
@@ -71,6 +78,7 @@ function adicionarFilhos(criarDiv: HTMLDivElement, criarId:HTMLParagraphElement,
     criarDiv.appendChild(criarPIdade);
     criarDiv.appendChild(botaoEditar);
     criarDiv.appendChild(botaoDeletar);
+
     return criarDiv;
 }
 
